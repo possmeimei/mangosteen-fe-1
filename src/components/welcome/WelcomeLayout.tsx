@@ -1,17 +1,15 @@
-import {defineComponent} from 'vue';
+import {FunctionalComponent} from 'vue';
 import s from './WelcomeLayout.module.scss'
-export const WelcomeLayout = defineComponent({
-    setup(props,context) {
-        const {slots} = context
-        return () =>
-            <div class={s.wrapper}>
-                <div class={s.card}>
-                    {slots.icon?.()}
-                    {slots.text?.()}
-                </div>
-                <div class={s.actions}>
-                    {slots.buttons?.()}
-                </div>
-            </div>;
-    }
-});
+export const WelcomeLayout: FunctionalComponent = (props,context)=>{
+    const {slots:{icon,text,buttons}} = context
+    return (
+        <div class={s.wrapper}>
+            <div class={s.card}>
+                {icon?.()}
+                {text?.()}
+            </div>
+            <div class={s.actions}>
+                {buttons?.()}
+            </div>
+        </div>)
+}
