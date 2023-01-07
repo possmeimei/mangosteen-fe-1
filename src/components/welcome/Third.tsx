@@ -1,17 +1,19 @@
 import s from './WelcomeLayout.module.scss'
-import alarm from '../../assets/icons/alarm.svg'
+import chart from '../../assets/icons/chart.svg'
 import {RouterLink} from 'vue-router';
 import {WelcomeLayout} from './WelcomeLayout';
-export const Second = ()=>(
+export const Third = ()=>(
     <WelcomeLayout>
         {{
-            icon:()=> <img src={alarm} alt={'闹钟'}/>,
-            text:()=> <p>每日提醒<br/>不会遗漏每一笔账单</p>,
+            icon:()=> <img src={chart} alt={'数据'}/>,
+            text:()=> <p>数据可视化<br/>收支一目了然</p>,
              buttons:()=> <>
                  <RouterLink class={s.fake} to="/start">跳过</RouterLink>
-                 <RouterLink to="/welcome/3">下一页</RouterLink>
+                 <RouterLink to="/welcome/4">下一页</RouterLink>
                  <RouterLink to="/start">跳过</RouterLink>
              </>
         }}
     </WelcomeLayout>
 )
+
+Third.displayName = 'Third'

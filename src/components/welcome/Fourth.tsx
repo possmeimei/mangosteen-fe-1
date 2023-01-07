@@ -15,3 +15,5 @@ export const Fourth = ()=>(
         }}
     </WelcomeLayout>
 )
+
+Fourth.displayName = 'Fourth'
