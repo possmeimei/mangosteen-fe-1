@@ -13,3 +13,5 @@ export const WelcomeLayout: FunctionalComponent = (props,context)=>{
             </div>
         </div>)
 }
+
+WelcomeLayout.displayName = 'WelcomeLayout'
