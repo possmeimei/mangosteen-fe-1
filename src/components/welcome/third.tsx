@@ -1,5 +1,5 @@
 import {defineComponent} from 'vue';
-import s from './welcome.module.scss'
+import s from './WelcomePage.module.scss'
 import chart from '../../assets/icons/chart.svg'
 import {RouterLink} from 'vue-router';
 export const Third = defineComponent({

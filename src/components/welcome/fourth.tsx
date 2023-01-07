@@ -1,5 +1,5 @@
 import {defineComponent} from 'vue';
-import s from './welcome.module.scss'
+import s from './WelcomePage.module.scss'
 import cloud from '../../assets/icons/cloud.svg'
 import {RouterLink} from 'vue-router';
 export const Fourth = defineComponent({
