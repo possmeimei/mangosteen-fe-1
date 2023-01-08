@@ -3,7 +3,12 @@ import {RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter,} from 'v
 import s from './Welcome.module.scss';
 import {useSwipe} from '../hooks/useSwipe';
 import {throttle} from '../shared/throttle';
-
+const pushMap:Record<string, string> = {
+    'welcome1':'/welcome/2',
+    'welcome2':'/welcome/3',
+    'welcome3':'/welcome/4',
+    'welcome4':'/start',
+}
 export const Welcome = defineComponent({
     setup(props, context) {
         const main = ref<HTMLElement>();
@@ -11,15 +16,8 @@ export const Welcome = defineComponent({
         const route = useRoute();
         const router = useRouter();
         const push = throttle(() => {
-            if (route.name === 'welcome1') {
-                return router.push('/welcome/2');
-            } else if (route.name === 'welcome2') {
-                return router.push('/welcome/3');
-            }else if (route.name === 'welcome3'){
-                return router.push('/welcome/4');
-            }else {
-                return router.push('/start');
-            }
+            const name = (route.name || 'welcome1').toString()
+                return router.push(pushMap[name]);
         }, 500);
         watchEffect(() => {
             if (swiping.value === true && direction.value === 'left') {
