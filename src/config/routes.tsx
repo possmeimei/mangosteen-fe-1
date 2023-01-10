@@ -7,6 +7,7 @@ import {ThirdAction} from '../components/welcome/ThirdAction';
 import {Fourth} from '../components/welcome/Fourth';
 import {FourthAction} from '../components/welcome/FourthAction';
 import {Welcome} from '../views/Welcome';
+import {Start} from '../views/Start';
 
 export const routes = [
     {path: '/', redirect: '/welcome'},
@@ -19,5 +20,8 @@ export const routes = [
             {path: '3', name: 'welcome3', components: {main: Third, footer: ThirdAction}},
             {path: '4', name: 'welcome4', components: {main: Fourth, footer: FourthAction}},
         ]
+    },
+    {
+        path:'/start',component: Start,
     }
 ];
