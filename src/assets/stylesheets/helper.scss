@@ -5,7 +5,8 @@ $font-kai: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL
 :root {
   --welcome-card-bg: white;
   --welcome-text-color: white;
-  --z-index-bottom-nav: 1;
+  --z-index-bottom-nav: 8;
+  --z-index-overlay: 16;
   --welcome-bg-color-start: rgba(92, 51, 190, 1);
   --welcome-bg-color-end: rgba(143, 76, 215, 1);
   --welcome-animation-transition: 0.5s;
@@ -16,5 +17,8 @@ $font-kai: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL
   --button-height: 48px;
   --navbar-bg-start: rgba(92, 51, 190, 1);
   --navbar-bg-end: rgba(143, 76, 215, 1);
-  --navbar-color:white;
+  --navbar-color: white;
+  --overlay-mask-bg: rgba(0, 0, 0, 0.5);
+  --overlay-bg: white;
+  --top-safe-area-height: 24px;
 }
