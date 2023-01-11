@@ -1,0 +1,33 @@
+.navbar {
+  background: linear-gradient(180deg, var(--navbar-bg-start) 0%, var(--navbar-bg-end) 100%);
+  color: var(--navbar-color);
+  height: 90px;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  &_wrapper {
+    border: 1px solid red;
+    font-size: 24px;
+    margin-left: 16px;
+  }
+}
+
+.icon {
+  &_wrapper {
+    border: 1px solid red;
+    width: 36px;
+    height: 36px;
+    margin-left: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > * {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}

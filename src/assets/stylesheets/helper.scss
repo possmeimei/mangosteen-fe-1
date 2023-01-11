@@ -4,14 +4,17 @@ $font-kai: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL
 
 :root {
   --welcome-card-bg: white;
-  --welcome-text-color:white;
-  --z-index-bottom-nav:1;
-  --welcome-bg-color-start:rgba(92, 51, 190, 1);
-  --welcome-bg-color-end:rgba(143, 76, 215, 1);
-  --welcome-animation-transition:0.5s;
+  --welcome-text-color: white;
+  --z-index-bottom-nav: 1;
+  --welcome-bg-color-start: rgba(92, 51, 190, 1);
+  --welcome-bg-color-end: rgba(143, 76, 215, 1);
+  --welcome-animation-transition: 0.5s;
   --button-bg: rgba(92, 51, 190, 1);
-  --button-text:white;
-  --button-font-size:18px;
-  --button-border-radius:8px;
-  --button-height:48px;
+  --button-text: white;
+  --button-font-size: 18px;
+  --button-border-radius: 8px;
+  --button-height: 48px;
+  --navbar-bg-start: rgba(92, 51, 190, 1);
+  --navbar-bg-end: rgba(143, 76, 215, 1);
+  --navbar-color:white;
 }
