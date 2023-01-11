@@ -8,6 +8,9 @@ import {Fourth} from '../components/welcome/Fourth';
 import {FourthAction} from '../components/welcome/FourthAction';
 import {Welcome} from '../views/Welcome';
 import {Start} from '../views/Start';
+import {ItemCreate} from '../components/Items/ItemCreate';
+import {ItemPage} from '../views/ItemPage';
+import {ItemList} from '../components/Items/ItemList';
 
 export const routes = [
     {path: '/', redirect: '/welcome'},
@@ -23,5 +26,12 @@ export const routes = [
     },
     {
         path:'/start',component: Start,
+    },
+    {
+        path: '/items', component: ItemPage,
+        children: [
+            { path: '', component: ItemList },
+            { path: 'create', component: ItemCreate },
+        ]
     }
 ];
