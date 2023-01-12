@@ -9,7 +9,7 @@ export const ItemList = defineComponent({
     },
     setup(props, context) {
         return () => (
-            <div class={s._wrapper}></div>
+            <div class={s.wrapper}></div>
         );
     }
 });

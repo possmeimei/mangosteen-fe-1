@@ -9,7 +9,7 @@ export const ItemPage = defineComponent({
     },
     setup(props, context) {
         return () => (
-            <div class={s._wrapper}>hi</div>
+            <div class={s.wrapper}>hi</div>
         );
     }
 });
