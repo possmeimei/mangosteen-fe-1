@@ -1,7 +1,8 @@
-import {defineComponent, PropType} from 'vue';
+import {defineComponent, PropType, ref} from 'vue';
 import s from './ItemCreate.module.scss';
 import {Icon} from '../../shared/Icon';
 import {MainLayout} from '../../layouts/MainLayout';
+import {Tab, Tabs} from '../../shared/Tabs';
 
 export const ItemCreate = defineComponent({
     props: {
@@ -10,6 +11,7 @@ export const ItemCreate = defineComponent({
         },
     },
     setup(props, context) {
+        const refKind = ref('支出');
         return () => (
             <MainLayout>{
                 {
@@ -17,7 +19,14 @@ export const ItemCreate = defineComponent({
                     icon: () => <Icon name={'return'} class={s.menu}/>,
                     default: () =>
                         <>
-                            <div>main</div>
+                              <Tabs v-model:selected={refKind.value}>
+                                <Tab name={'支出'}>
+                                    icon 列表1
+                                </Tab>
+                                <Tab name={'收入'}>
+                                    icon 列表2
+                                </Tab>
+                            </Tabs>
                         </>
                 }
             }</MainLayout>
