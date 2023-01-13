@@ -1,6 +1,6 @@
 import {defineComponent, PropType} from 'vue';
 import s from './InputPad.module.scss';
-import {Icon, IconName} from '../../shared/Icon';
+import {Icon} from '../../shared/Icon';
 
 export const InputPad = defineComponent({
     props: {
