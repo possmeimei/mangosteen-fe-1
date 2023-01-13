@@ -4,23 +4,25 @@
   justify-content: space-between;
   align-items: center;
   height: 64px;
-  .notes {
+  .date {
     display: flex;
     justify-content: left;
     align-items: center;
     margin-left: 16px;
     > .icon {
       width: 24px;
-      margin-right: 12px;
+      margin-right: 8px;
     }
     > span{
       margin-top: 3px;
       color: #999;
+      font-family: monospace;
     }
   }
 
   .amount {
     font-size: 24px;
+    font-family: monospace;
     margin-right: 16px;
     color: #8F4CD7FF;
   }
