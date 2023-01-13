@@ -1,6 +1,7 @@
-import {defineComponent, PropType} from 'vue';
+import {defineComponent, PropType, ref} from 'vue';
 import s from './InputPad.module.scss';
 import {Icon} from '../../shared/Icon';
+import {time} from '../../shared/Time';
 
 export const InputPad = defineComponent({
     props: {
@@ -9,6 +10,8 @@ export const InputPad = defineComponent({
         },
     },
     setup(props, context) {
+        const now = new Date()
+        const refDate = ref<Date>(now)
         const buttons = [
             {text:'1',onClick:()=>{}},
             {text:'2',onClick:()=>{}},
@@ -31,7 +34,7 @@ export const InputPad = defineComponent({
             <div class={s.output}>
                 <span class={s.date}>
                     <Icon name="calendar" class={s.icon}></Icon>
-                    <span>2022.1.13</span>
+                    <span><input type="date" value={time(now).format()}/></span>
                 </span>
                 <span class={s.amount}>201.6</span>
             </div>
