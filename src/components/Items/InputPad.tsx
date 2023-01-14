@@ -15,37 +15,43 @@ export const InputPad = defineComponent({
         const refDate = ref<Date>(now)
         const buttons = [
             {text:'1',onClick:()=>{
-                refAmount.value += 1
-                }},
+                appendText(1)
+            }},
             {text:'2',onClick:()=>{
-                    refAmount.value += 2
+                appendText(2)
                 }},
             {text:'3',onClick:()=>{
-                    refAmount.value += 3
+                appendText(3)
                 }},
-            {text:'清空',onClick:()=>{}},
+            {text:'清空',onClick:()=>{
+                refAmount.value = ''
+                }},
             {text:'4',onClick:()=>{
-                    refAmount.value += 4
+                    appendText(4)
                 }},
             {text:'5',onClick:()=>{
-                    refAmount.value += 5
+                    appendText(5)
                 }},
             {text:'6',onClick:()=>{
-                    refAmount.value += 6
+                    appendText(6)
                 }},
             {text:'+',onClick:()=>{}},
             {text:'7',onClick:()=>{
-                    refAmount.value += 7
-                }},
+                    appendText(7)
+            }},
             {text:'8',onClick:()=>{
-                    refAmount.value += 8
+                    appendText(8)
                 }},
             {text:'9',onClick:()=>{
-                    refAmount.value += 9
+                    appendText(9)
                 }},
             {text:'-',onClick:()=>{}},
-            {text:'.',onClick:()=>{}},
-            {text:'0',onClick:()=>{}},
+            {text:'.',onClick:()=>{
+                    appendText('.')
+                }},
+            {text:'0',onClick:()=>{
+                    appendText(0)
+                }},
             {text:'删除',onClick:()=>{}},
             {text:'OK',onClick:()=>{}},
         ]
@@ -54,6 +60,7 @@ export const InputPad = defineComponent({
         const hideDatePicker = () => refDatePickerVisible.value = false
         const setDate = (date: Date) => { refDate.value = date; hideDatePicker() }
         const refAmount = ref('')
+        const appendText =(n:number | string)=>refAmount.value += n.toString()
         return () => <>
             <div class={s.output}>
                 <span class={s.date}>
