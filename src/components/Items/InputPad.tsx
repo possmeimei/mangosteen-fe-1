@@ -13,6 +13,7 @@ export const InputPad = defineComponent({
     setup(props, context) {
         const now = new Date()
         const refDate = ref<Date>(now)
+        const appendText =(n:number | string)=>refAmount.value += n.toString()
         const buttons = [
             {text:'1',onClick:()=>{
                 appendText(1)
@@ -23,9 +24,6 @@ export const InputPad = defineComponent({
             {text:'3',onClick:()=>{
                 appendText(3)
                 }},
-            {text:'清空',onClick:()=>{
-                refAmount.value = ''
-                }},
             {text:'4',onClick:()=>{
                     appendText(4)
                 }},
@@ -35,7 +33,6 @@ export const InputPad = defineComponent({
             {text:'6',onClick:()=>{
                     appendText(6)
                 }},
-            {text:'+',onClick:()=>{}},
             {text:'7',onClick:()=>{
                     appendText(7)
             }},
@@ -45,14 +42,15 @@ export const InputPad = defineComponent({
             {text:'9',onClick:()=>{
                     appendText(9)
                 }},
-            {text:'-',onClick:()=>{}},
-            {text:'.',onClick:()=>{
-                    appendText('.')
-                }},
             {text:'0',onClick:()=>{
                     appendText(0)
                 }},
-            {text:'删除',onClick:()=>{}},
+            {text:'.',onClick:()=>{
+                    appendText('.')
+                }},
+            {text:'清空',onClick:()=>{
+                    refAmount.value = ''
+                }},
             {text:'OK',onClick:()=>{}},
         ]
         const refDatePickerVisible = ref(false)
@@ -60,7 +58,6 @@ export const InputPad = defineComponent({
         const hideDatePicker = () => refDatePickerVisible.value = false
         const setDate = (date: Date) => { refDate.value = date; hideDatePicker() }
         const refAmount = ref('')
-        const appendText =(n:number | string)=>refAmount.value += n.toString()
         return () => <>
             <div class={s.output}>
                 <span class={s.date}>
