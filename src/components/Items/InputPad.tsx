@@ -14,10 +14,10 @@ export const InputPad = defineComponent({
         const now = new Date();
         const refDate = ref<Date>(now);
         const appendText = (n: number | string) => {
-            if (refAmount.value.length>=13){
+            if (refAmount.value.length >= 13) {
                 return;
             }
-            if (refAmount.value.indexOf('.')>=0 && refAmount.value.length-refAmount.value.indexOf('.')>2){
+            if (refAmount.value.indexOf('.') >= 0 && refAmount.value.length - refAmount.value.indexOf('.') > 2) {
                 return;
             }
             if (n.toString() === '.') {
@@ -26,7 +26,7 @@ export const InputPad = defineComponent({
                 }
             } else if (n.toString() === '0') {
                 if (refAmount.value.indexOf('.') < 0) {//如果没有小数点
-                    if (refAmount.value.indexOf('0') >= 0) {//没小数点但有0
+                    if (refAmount.value === '0') {//没小数点但有0
                         return;
                     }
                 }
