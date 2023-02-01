@@ -11,6 +11,9 @@ import {Start} from '../views/Start';
 import {ItemCreate} from '../components/Items/ItemCreate';
 import {ItemPage} from '../views/ItemPage';
 import {ItemList} from '../components/Items/ItemList';
+import {TagCreate} from '../components/Items/Tag/TagCreate';
+import {TagEdit} from '../components/Items/Tag/TagEdit';
+import {TagPage} from '../views/TagPage';
 
 export const routes = [
     {path: '/', redirect: '/welcome'},
@@ -32,6 +35,13 @@ export const routes = [
         children: [
             { path: '', component: ItemList },
             { path: 'create', component: ItemCreate },
+        ]
+    },
+    {
+        path: '/tags', component: TagPage,
+        children: [
+            { path: 'create', component: TagCreate },
+            { path: ':id', component: TagEdit },
         ]
     }
 ];
