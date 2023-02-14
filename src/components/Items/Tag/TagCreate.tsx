@@ -54,7 +54,7 @@ export const TagCreate = defineComponent({
                                     <EmojiSelect v-model={formData.sign} class={[s.formItem, s.emojiList, s.error]}/>
                                 </div>
                                 <div class={s.formItem_errorHint}>
-                                    <span>{errors['name'] ? errors['name'][0] : <span>&nbsp;</span>}</span>
+                                    <span>{errors['sign'] ? errors['sign'][0] : <span>&nbsp;</span>}</span>
                                 </div>
                             </label>
                         </div>
