@@ -1,8 +1,16 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 88px);
+}
+.tabs{
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+}
 .inputPad_wrapper{
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 .tags_wrapper{
   display: flex;
@@ -34,7 +42,7 @@
   }
   &.selected{
     .sign{
-      border: var(--main);
+      border-color: var(--main);
     }
   }
 }
