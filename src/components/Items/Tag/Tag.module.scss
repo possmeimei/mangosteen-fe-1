@@ -1,21 +1,26 @@
 .form {
   padding: 16px;
+
   > .formRow {
     margin-top: 8px;
-    > .tips{
+
+    > .tips {
       text-align: center;
       padding-top: 16px;
       padding-bottom: 10px;
     }
-    > .button{
+
+    > .button {
       width: 100%;
     }
   }
 }
+
 .formItem {
   &_name {
     font-size: 18px;
   }
+
   &_value {
     display: flex;
     margin-top: 4px;
@@ -23,9 +28,19 @@
     border-radius: 6px;
     padding: 4px 10px;
   }
+
   &_errorHint {
     color: var(--error-color);
     font-size: 12px;
     margin-top: 4px;
+  }
+}
+
+.actions {
+  padding:0 16px 32px 16px;
+  display: flex;
+  justify-content: space-between;
+  .removeTag,.removeTagAndItem{
+    width: calc(50% - 8px);
   }
 }
