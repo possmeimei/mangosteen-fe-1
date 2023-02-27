@@ -38,36 +38,40 @@ export class Time {
     lastDayOfYear() {
         return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0,));
     }
-    add(amount:number, unit:'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'){
-        const date = new Date(this.date.getTime())
-        switch (unit){
+    getRaw(){
+        return this.date
+    }
+    add(amount: number, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond') {
+        const date = new Date(this.date.getTime());
+        switch (unit) {
             case 'year':
                 date.setFullYear(date.getFullYear() + amount);
                 break;
             case 'month':
                 const d = date.getDate();
                 date.setDate(1);
-                date.setMonth(date.getMonth()+amount);
-                const d2 = new Date(date.getFullYear(),date.getMonth()+1,0,0,0,0).getDate()
-                date.setDate(Math.min(d,d2))
+                date.setMonth(date.getMonth() + amount);
+                const d2 = new Date(date.getFullYear(), date.getMonth() + 1, 0, 0, 0, 0).getDate();
+                date.setDate(Math.min(d, d2));
                 break;
             case 'day':
-                date.setDate(date.getDay()+amount);
+                date.setDate(date.getDay() + amount);
                 break;
             case 'hour':
-                date.setHours(date.getHours()+amount);
+                date.setHours(date.getHours() + amount);
                 break;
             case 'minute':
-                date.setMinutes(date.getMinutes()+amount);
+                date.setMinutes(date.getMinutes() + amount);
                 break;
             case 'second':
-                date.setSeconds(date.getSeconds()+amount);
+                date.setSeconds(date.getSeconds() + amount);
                 break;
             case 'millisecond':
-                date.setMilliseconds(date.getMilliseconds()+amount);
+                date.setMilliseconds(date.getMilliseconds() + amount);
                 break;
             default:
                 throw new Error('Time.add:unknown unit');
         }
+        return new Time(date)
     }
 }
