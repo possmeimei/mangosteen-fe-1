@@ -32,7 +32,7 @@ export const ItemSummary = defineComponent({
                                 <span class={s.amount}>￥2380</span>
                             </div>
                             <div class={s.time}>
-                                <span>2023.02.27</span>
+                                <span>2023.02.27 12:36</span>
                             </div>
                         </div>
                     </li>

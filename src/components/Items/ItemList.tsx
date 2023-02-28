@@ -1,10 +1,11 @@
-import {defineComponent, PropType, reactive, ref} from 'vue';
+import {defineComponent, PropType, reactive, ref, watchEffect} from 'vue';
 import s from './ItemList.module.scss';
 import {MainLayout} from '../../layouts/MainLayout';
 import {Icon} from '../../shared/Icon';
 import {Tab, Tabs} from '../../shared/Tabs';
 import {ItemSummary} from './ItemSummary';
 import {Time} from '../../shared/Time';
+import {Overlay} from 'vant';
 
 export const ItemList = defineComponent({
     setup(props, context) {
@@ -12,30 +13,36 @@ export const ItemList = defineComponent({
         const time = new Time();
         const customTime = reactive(
             {
-                start:new Time(),
-                end:new Time()
+                start: new Time(),
+                end: new Time()
             }
-        )
+        );
         const timeList = [
             {
-                start:time.firstDayOfMonth(),
-                end:time.lastDayOfMonth()
+                start: time.firstDayOfMonth(),
+                end: time.lastDayOfMonth()
             },
             {
-                start:time.add(-1, 'month').firstDayOfMonth(),
-                end:time.add(-1, 'month').lastDayOfMonth()
+                start: time.add(-1, 'month').firstDayOfMonth(),
+                end: time.add(-1, 'month').lastDayOfMonth()
             },
             {
-                start:time.firstDayOfYear(),
-                end:time.lastDayOfYear()
+                start: time.firstDayOfYear(),
+                end: time.lastDayOfYear()
             }
         ];
+        watchEffect(()=>{
+            if (refSelected.value==="自定义时间"){
+                refOverlayVisible.value = true
+            }
+        })
+        const refOverlayVisible = ref(false);
         return () => (
             <MainLayout>{
                 {
                     title: () => '山竹记账',
                     icon: () => <Icon name="menu" class={s.menu}/>,
-                    default: () => (
+                    default: () => <>
                         <Tabs classPrefix={'bill'} v-model:selected={refSelected.value}>
                             <Tab name="本月">
                                 <ItemSummary startDate={timeList[0].start.format()} endDate={timeList[0].end.format()}/>
@@ -47,10 +54,21 @@ export const ItemList = defineComponent({
                                 <ItemSummary startDate={timeList[2].start.format()} endDate={timeList[2].end.format()}/>
                             </Tab>
                             <Tab name="自定义时间">
-                                <ItemSummary startDate={customTime.start.format()} endDate={customTime.end.format()} />
+                                <ItemSummary startDate={customTime.start.format()} endDate={customTime.end.format()}/>
                             </Tab>
                         </Tabs>
-                    )
+                        <Overlay show={refOverlayVisible.value} class={s.overlay}>
+                            <div class={s.overlay_inner}>
+                                <header>请选择时间</header>
+                                <main>
+                                    <form action="">
+                                        <div></div>
+                                        <div></div>
+                                    </form>
+                                </main>
+                            </div>
+                        </Overlay>
+                    </>
                 }
             }</MainLayout>
         );
