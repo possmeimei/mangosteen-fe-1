@@ -1,20 +1,35 @@
-.menu{
+.menu {
   fill: var(--navbar-color);
 }
-.overlay{
+
+.overlay {
   display: flex;
   justify-content: center;
   align-items: center;
-  border:1px solid red;
   background: var(--overlay-mask-bg);
-  &_inner{
+
+  &_inner {
     background: var(--overlay-bg);
     width: 80vw;
-    > header{
+
+    > header {
       background: var(--main);
       color: var(--button-text-color);
       padding: 12px 16px;
     }
-    > main{}
+
+    > main {
+      .actions {
+        text-align: right;
+
+        > button {
+          border: 1px solid var(--input-border-color);
+          border-radius: var(--button-border-radius);
+          padding: 4px 12px;
+          margin-top: 8px;
+          margin-left: 12px;
+        }
+      }
+    }
   }
 }

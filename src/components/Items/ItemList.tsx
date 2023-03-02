@@ -6,6 +6,7 @@ import {Tab, Tabs} from '../../shared/Tabs';
 import {ItemSummary} from './ItemSummary';
 import {Time} from '../../shared/Time';
 import {Overlay} from 'vant';
+import {Form, FormItem} from '../../shared/Form';
 
 export const ItemList = defineComponent({
     setup(props, context) {
@@ -13,8 +14,8 @@ export const ItemList = defineComponent({
         const time = new Time();
         const customTime = reactive(
             {
-                start: new Time(),
-                end: new Time()
+                start: new Time().format(),
+                end: new Time().format()
             }
         );
         const timeList = [
@@ -31,12 +32,16 @@ export const ItemList = defineComponent({
                 end: time.lastDayOfYear()
             }
         ];
-        watchEffect(()=>{
-            if (refSelected.value==="自定义时间"){
-                refOverlayVisible.value = true
+        watchEffect(() => {
+            if (refSelected.value === '自定义时间') {
+                refOverlayVisible.value = true;
             }
-        })
+        });
         const refOverlayVisible = ref(false);
+        const onSubmitCustomTime = (e: Event) => {
+            e.preventDefault();
+            refOverlayVisible.value = false;
+        };
         return () => (
             <MainLayout>{
                 {
@@ -54,17 +59,23 @@ export const ItemList = defineComponent({
                                 <ItemSummary startDate={timeList[2].start.format()} endDate={timeList[2].end.format()}/>
                             </Tab>
                             <Tab name="自定义时间">
-                                <ItemSummary startDate={customTime.start.format()} endDate={customTime.end.format()}/>
+                                <ItemSummary startDate={customTime.start} endDate={customTime.end}/>
                             </Tab>
                         </Tabs>
                         <Overlay show={refOverlayVisible.value} class={s.overlay}>
                             <div class={s.overlay_inner}>
                                 <header>请选择时间</header>
                                 <main>
-                                    <form action="">
-                                        <div></div>
-                                        <div></div>
-                                    </form>
+                                    <Form onSubmit={onSubmitCustomTime}>
+                                        <FormItem label={'开始时间'} v-model={customTime.start} type={'date'}/>
+                                        <FormItem label={'结束时间'} v-model={customTime.end} type={'date'}/>
+                                        <FormItem>
+                                            <div class={s.actions}>
+                                                <button type={'button'}>取消</button>
+                                                <button type={'submit'}>确认</button>
+                                            </div>
+                                        </FormItem>
+                                    </Form>
                                 </main>
                             </div>
                         </Overlay>
