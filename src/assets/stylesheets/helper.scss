@@ -5,8 +5,11 @@ $font-kai: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL
 :root {
   --welcome-card-bg: white;
   --welcome-text-color: white;
+  --text: #333;
   --z-index-bottom-nav: 8;
   --z-index-overlay: 16;
+  --z-index-navbar: 32;
+  --van-overlay-z-index: 64;
   --welcome-bg-color-start: rgba(92, 51, 190, 1);
   --welcome-bg-color-end: rgba(143, 76, 215, 1);
   --welcome-animation-transition: 0.5s;
