@@ -1,0 +1,23 @@
+.wrapper{}
+.logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 42px 0 16px;
+  > .icon{
+    width: 64px;
+    height: 69px;
+  }
+  > .appName{
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--button-bg);
+  }
+}
+.validation{
+  margin-top: 16px;
+}
+.button{
+  margin-top: 126px;
+}
