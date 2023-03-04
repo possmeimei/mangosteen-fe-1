@@ -102,7 +102,7 @@ export const Charts = defineComponent({
                 <div ref={refDiv} class={s.demo}></div>
                 <div ref={refDiv2} class={s.demo2}></div>
                 <div class={s.demo3}>
-                    {betterData3.value.map((tag,amount,percent)=>{
+                    {betterData3.value.map(({tag,amount,percent})=>{
                         return (
                             <div class={s.topItem}>
                                 <div class={s.sign}>

@@ -11,7 +11,7 @@
 }
 
 input::placeholder {
-  color: #999999;
+  color: var(--input-placeholder);
 }
 
 .formItem {
