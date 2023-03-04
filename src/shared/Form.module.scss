@@ -10,10 +10,14 @@
   display: block;
 }
 
+input::placeholder {
+  color: #999999;
+}
+
 .formItem {
   min-height: var(--input-min-height);
   max-width: 100%;
-  //color: #999999;
+
   &.button {
     width: 100%;
   }
