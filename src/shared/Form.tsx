@@ -75,11 +75,17 @@ export const FormItem = defineComponent({
                     </>;
                 case 'select':
                     return <>
-                        <select class={[s.formItem, s.select]} value={props.modelValue}
-                        onChange={(e:any)=>{context.emit('update:modelValue',e.target.value)}}>
-                            {props.options?.map(option=> <option value={option.value}>{option.text}</option>
-                            )}
-                        </select>
+                        <label>
+                            类型
+                            <select class={[s.formItem, s.select]} value={props.modelValue}
+                                    onChange={(e: any) => {
+                                        context.emit('update:modelValue', e.target.value)
+                                    }}>
+                                {props.options?.map(option => <option value={option.value}>{option.text}</option>
+                                )}
+                            </select>
+                        </label>
+
                     </>;
                 case undefined:
                     return context.slots.default?.();

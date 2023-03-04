@@ -1,3 +1,21 @@
 .wrapper{
   padding: 16px;
 }
+.demo{
+  height: 168px;
+}
+.demo2{
+  height: 264px;
+}
+.demo3{
+
+}
+.topItem{
+  > .sign{}
+  > .bar_wrapper{
+    > .bar_text{}
+    > .bar{
+      &_inner{}
+    }
+  }
+}
