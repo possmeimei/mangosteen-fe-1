@@ -4,6 +4,7 @@ import {EmojiSelect} from './EmojiSelect';
 import {DatetimePicker, Popup} from 'vant';
 import {Time} from './Time';
 import {Button} from './Button';
+import {getFriendlyError} from './getFriendlyError';
 
 export const Form = defineComponent({
     props: {
@@ -118,7 +119,9 @@ export const FormItem = defineComponent({
                 <label class={s.formLabel}>
                     {props.label && <span class={s.formItem_name}>{props.label}</span>}
                     <div class={s.formItem_value}>{content.value}</div>
-                    {props.error && <div class={s.formItem_errorHint}><span>{props.error}</span></div>}
+                    {props.error && <div class={s.formItem_errorHint}>
+                        <span>{props.error ? getFriendlyError(props.error) :' '}</span>
+                    </div>}
                 </label>
             </div>;
         };

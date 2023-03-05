@@ -5,7 +5,7 @@ import {Icon} from '../shared/Icon';
 import {Form, FormItem} from '../shared/Form';
 import {Button} from '../shared/Button';
 import {validate} from '../shared/Validate';
-import axios from 'axios';
+import {http} from '../shared/Http';
 
 export const SignInPage = defineComponent({
     props: {
@@ -38,12 +38,15 @@ export const SignInPage = defineComponent({
                 {key: 'validationCode', type: 'required', message: '必填'},
             ]));
         };
+        const onError = (error:any)=>{
+            if (error.response.status === 422){
+                Object.assign(errors,error.response.data.errors)
+            }
+            throw error
+        }
         const onClickSendValidationCode = async ()=>{
-            const response = await axios.post('/api/v1/validation_codes',{email: formData.email})
-                .catch(()=>{
-                    //失败
-                })
-            //成功
+            const response = await http.post('/validation_codes',{email: formData.email})
+                .catch(onError)
             refValidationCode.value.startCountdown()
         };
         return () => (
@@ -63,7 +66,7 @@ export const SignInPage = defineComponent({
                                           v-model={formData.email} error={errors.email?.[0] ?? ' '}/>
                                 <FormItem ref={refValidationCode} class={s.validation} label={'验证码'} type={'validationCode'}
                                           placeholder={'六位数字'}
-                                          // countForm={3}
+                                          countForm={1}
                                           onClick={onClickSendValidationCode}
                                           v-model={formData.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
                                 <FormItem class={s.button}>
