@@ -6,6 +6,7 @@ import {Form, FormItem} from '../shared/Form';
 import {Button} from '../shared/Button';
 import {validate} from '../shared/Validate';
 import {http} from '../shared/Http';
+import {useBool} from '../hooks/useBool';
 
 export const SignInPage = defineComponent({
     props: {
@@ -27,7 +28,7 @@ export const SignInPage = defineComponent({
             }
         );
         const refValidationCode = ref<any>();
-        const refValidationCodeDisabled = ref(false);
+        const {ref: refDisabled, toggle, on, off} = useBool(false);
         const onSubmit = (e: Event) => {
             e.preventDefault();
             Object.assign(errors, {
@@ -46,12 +47,10 @@ export const SignInPage = defineComponent({
             throw error;
         };
         const onClickSendValidationCode = async () => {
-            refValidationCodeDisabled.value = true;
+            on()
             const response = await http.post('/validation_codes', {email: formData.email})
                 .catch(onError)
-                .finally(() => {
-                    refValidationCodeDisabled.value = false;
-                });
+                .finally(off);
             refValidationCode.value.startCountdown();
         };
         return () => (
@@ -73,7 +72,7 @@ export const SignInPage = defineComponent({
                                           type={'validationCode'}
                                           placeholder={'六位数字'}
                                           countForm={1}
-                                          disabled={refValidationCodeDisabled.value}
+                                          disabled={refDisabled.value}
                                           onClick={onClickSendValidationCode}
                                           v-model={formData.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
                                 <FormItem class={s.button}>
