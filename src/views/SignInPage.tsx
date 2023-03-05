@@ -5,6 +5,7 @@ import {Icon} from '../shared/Icon';
 import {Form, FormItem} from '../shared/Form';
 import {Button} from '../shared/Button';
 import {validate} from '../shared/Validate';
+import axios from 'axios';
 
 export const SignInPage = defineComponent({
     props: {
@@ -13,7 +14,7 @@ export const SignInPage = defineComponent({
         },
     },
     setup(props, context) {
-        const FormDate = reactive(
+        const formData = reactive(
             {
                 email: '',
                 validationCode: ''
@@ -30,14 +31,15 @@ export const SignInPage = defineComponent({
             Object.assign(errors, {
                 email: [], validationCode: [],
             });
-            Object.assign(errors, validate(FormDate, [
+            Object.assign(errors, validate(formData, [
                 {key: 'email', type: 'required', message: '必填'},
                 {key: 'email', type: 'pattern', regex: /.+@.+/, message: '必须是邮箱地址'},
                 {key: 'validationCode', type: 'required', message: '必填'},
             ]));
         };
-        const onClickSendValidationCode = ()=>{
-            console.log('111111');
+        const onClickSendValidationCode = async ()=>{
+            // const response = await axios.post('/api/v1/validation_codes',{email: formData.email})
+            // console.log(response)
         }
         return () => (
             <MainLayout>{
@@ -53,11 +55,12 @@ export const SignInPage = defineComponent({
                             <Form onSubmit={onSubmit}>
                                 <FormItem label={'邮箱地址'} type={'text'}
                                           placeholder={'请输入邮箱，然后点击发送验证码'}
-                                          v-model={FormDate.email} error={errors.email?.[0] ?? ' '}/>
+                                          v-model={formData.email} error={errors.email?.[0] ?? ' '}/>
                                 <FormItem class={s.validation} label={'验证码'} type={'validationCode'}
                                           placeholder={'六位数字'}
+                                          countForm={3}
                                           onClick={onClickSendValidationCode}
-                                          v-model={FormDate.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
+                                          v-model={formData.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
                                 <FormItem class={s.button}>
                                     <Button>登录</Button>
                                 </FormItem>
