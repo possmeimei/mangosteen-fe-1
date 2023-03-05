@@ -26,7 +26,8 @@ export const SignInPage = defineComponent({
                 validationCode: []
             }
         );
-        const refValidationCode = ref<any>()
+        const refValidationCode = ref<any>();
+        const refValidationCodeDisabled = ref(false);
         const onSubmit = (e: Event) => {
             e.preventDefault();
             Object.assign(errors, {
@@ -38,16 +39,20 @@ export const SignInPage = defineComponent({
                 {key: 'validationCode', type: 'required', message: '必填'},
             ]));
         };
-        const onError = (error:any)=>{
-            if (error.response.status === 422){
-                Object.assign(errors,error.response.data.errors)
+        const onError = (error: any) => {
+            if (error.response.status === 422) {
+                Object.assign(errors, error.response.data.errors);
             }
-            throw error
-        }
-        const onClickSendValidationCode = async ()=>{
-            const response = await http.post('/validation_codes',{email: formData.email})
+            throw error;
+        };
+        const onClickSendValidationCode = async () => {
+            refValidationCodeDisabled.value = true;
+            const response = await http.post('/validation_codes', {email: formData.email})
                 .catch(onError)
-            refValidationCode.value.startCountdown()
+                .finally(() => {
+                    refValidationCodeDisabled.value = false;
+                });
+            refValidationCode.value.startCountdown();
         };
         return () => (
             <MainLayout>{
@@ -64,9 +69,11 @@ export const SignInPage = defineComponent({
                                 <FormItem label={'邮箱地址'} type={'text'}
                                           placeholder={'请输入邮箱，然后点击发送验证码'}
                                           v-model={formData.email} error={errors.email?.[0] ?? ' '}/>
-                                <FormItem ref={refValidationCode} class={s.validation} label={'验证码'} type={'validationCode'}
+                                <FormItem ref={refValidationCode} class={s.validation} label={'验证码'}
+                                          type={'validationCode'}
                                           placeholder={'六位数字'}
                                           countForm={1}
+                                          disabled={refValidationCodeDisabled.value}
                                           onClick={onClickSendValidationCode}
                                           v-model={formData.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
                                 <FormItem class={s.button}>
