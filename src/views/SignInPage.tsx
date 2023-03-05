@@ -1,4 +1,4 @@
-import {defineComponent, PropType, reactive} from 'vue';
+import {defineComponent, PropType, reactive, ref} from 'vue';
 import {MainLayout} from '../layouts/MainLayout';
 import s from './SignInPage.module.scss';
 import {Icon} from '../shared/Icon';
@@ -26,6 +26,7 @@ export const SignInPage = defineComponent({
                 validationCode: []
             }
         );
+        const refValidationCode = ref<any>()
         const onSubmit = (e: Event) => {
             e.preventDefault();
             Object.assign(errors, {
@@ -38,9 +39,13 @@ export const SignInPage = defineComponent({
             ]));
         };
         const onClickSendValidationCode = async ()=>{
-            // const response = await axios.post('/api/v1/validation_codes',{email: formData.email})
-            // console.log(response)
-        }
+            const response = await axios.post('/api/v1/validation_codes',{email: formData.email})
+                .catch(()=>{
+                    //失败
+                })
+            //成功
+            refValidationCode.value.startCountdown()
+        };
         return () => (
             <MainLayout>{
                 {
@@ -56,9 +61,9 @@ export const SignInPage = defineComponent({
                                 <FormItem label={'邮箱地址'} type={'text'}
                                           placeholder={'请输入邮箱，然后点击发送验证码'}
                                           v-model={formData.email} error={errors.email?.[0] ?? ' '}/>
-                                <FormItem class={s.validation} label={'验证码'} type={'validationCode'}
+                                <FormItem ref={refValidationCode} class={s.validation} label={'验证码'} type={'validationCode'}
                                           placeholder={'六位数字'}
-                                          countForm={3}
+                                          // countForm={3}
                                           onClick={onClickSendValidationCode}
                                           v-model={formData.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
                                 <FormItem class={s.button}>
