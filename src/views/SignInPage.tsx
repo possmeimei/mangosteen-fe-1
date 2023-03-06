@@ -4,7 +4,7 @@ import s from './SignInPage.module.scss';
 import {Icon} from '../shared/Icon';
 import {Form, FormItem} from '../shared/Form';
 import {Button} from '../shared/Button';
-import {validate} from '../shared/Validate';
+import {hasError, validate} from '../shared/Validate';
 import {http} from '../shared/Http';
 import {useBool} from '../hooks/useBool';
 
@@ -28,8 +28,8 @@ export const SignInPage = defineComponent({
             }
         );
         const refValidationCode = ref<any>();
-        const {ref: refDisabled, toggle, on:disabled, off:enabled} = useBool(false);
-        const onSubmit = (e: Event) => {
+        const {ref: refDisabled, toggle, on: disabled, off: enabled} = useBool(false);
+        const onSubmit = async (e: Event) => {
             e.preventDefault();
             Object.assign(errors, {
                 email: [], validationCode: [],
@@ -39,6 +39,9 @@ export const SignInPage = defineComponent({
                 {key: 'email', type: 'pattern', regex: /.+@.+/, message: '必须是邮箱地址'},
                 {key: 'validationCode', type: 'required', message: '必填'},
             ]));
+            if (!hasError(errors)) {
+                const response = await http.post('/session', formData);
+            }
         };
         const onError = (error: any) => {
             if (error.response.status === 422) {
@@ -47,7 +50,7 @@ export const SignInPage = defineComponent({
             throw error;
         };
         const onClickSendValidationCode = async () => {
-            disabled()
+            disabled();
             const response = await http.post('/validation_codes', {email: formData.email})
                 .catch(onError)
                 .finally(enabled);
@@ -76,7 +79,7 @@ export const SignInPage = defineComponent({
                                           onClick={onClickSendValidationCode}
                                           v-model={formData.validationCode} error={errors.validationCode?.[0] ?? ' '}/>
                                 <FormItem class={s.button}>
-                                    <Button>登录</Button>
+                                    <Button type={'submit'}>登录</Button>
                                 </FormItem>
                             </Form>
                         </div>
