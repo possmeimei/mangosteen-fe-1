@@ -35,13 +35,14 @@ export const validate = <T extends FDate>(formData: T, rules: Rules<T>) => {
     });
     return errors;
 };
-export function hasError(errors:Record<string , string[]>){
-    let result = false
-    for (let key in errors){
-        if (errors[key].length > 0){
-            result = true
-            break
+
+export function hasError(errors: Record<string, string[]>) {
+    let result = false;
+    for (let key in errors) {
+        if (errors[key].length > 0) {
+            result = true;
+            break;
         }
     }
-    return result
+    return result;
 }
