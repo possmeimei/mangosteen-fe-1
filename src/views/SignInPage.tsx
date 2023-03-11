@@ -8,6 +8,7 @@ import {hasError, validate} from '../shared/Validate';
 import {http} from '../shared/Http';
 import {useBool} from '../hooks/useBool';
 import {useRoute, useRouter} from 'vue-router';
+import {refreshMe} from '../shared/me';
 
 export const SignInPage = defineComponent({
     props: {
@@ -28,8 +29,8 @@ export const SignInPage = defineComponent({
                 validationCode: []
             }
         );
-        const router = useRouter()
-        const route = useRoute()
+        const router = useRouter();
+        const route = useRoute();
         const refValidationCode = ref<any>();
         const {ref: refDisabled, toggle, on: disabled, off: enabled} = useBool(false);
         const onSubmit = async (e: Event) => {
@@ -43,11 +44,17 @@ export const SignInPage = defineComponent({
                 {key: 'validationCode', type: 'required', message: '必填'},
             ]));
             if (!hasError(errors)) {
-                const response = await http.post<{jwt:string}>('/session', formData)
-                 .catch(onError)
-                localStorage.setItem('jwt',response.data.jwt)
-                const returnTo = route.query.return_to?.toString()
-                router.push(returnTo || '/')
+                const response = await http.post<{ jwt: string }>('/session', formData)
+                    .catch(onError);
+                localStorage.setItem('jwt', response.data.jwt);
+                const returnTo = route.query.return_to?.toString();
+                refreshMe().then(
+                    () => {
+                        router.push(returnTo || '/');
+                    },
+                    () => {
+                        window.alert('登录失败');
+                    });
             }
         };
         const onError = (error: any) => {
