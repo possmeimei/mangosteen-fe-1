@@ -44,9 +44,8 @@ export const SignInPage = defineComponent({
                 {key: 'validationCode', type: 'required', message: '必填'},
             ]));
             if (!hasError(errors)) {
-                const response = await http.post<{ jwt: string }>('/session', formData,{
-                    params: { _mock: 'session' }
-                }).catch(onError);
+                const response = await http.post<{ jwt: string }>('/session', formData,)
+                    .catch(onError);
                 localStorage.setItem('jwt', response.data.jwt);
                 const returnTo = route.query.return_to?.toString();
                 refreshMe().then(
