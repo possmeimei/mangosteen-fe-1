@@ -1,9 +1,10 @@
-import {defineComponent, PropType, ref} from 'vue';
+import {defineComponent, onMounted, PropType, ref} from 'vue';
 import s from './ItemCreate.module.scss';
 import {Icon} from '../../shared/Icon';
 import {MainLayout} from '../../layouts/MainLayout';
 import {Tab, Tabs} from '../../shared/Tabs';
 import {InputPad} from './InputPad';
+import {http} from '../../shared/Http';
 
 export const ItemCreate = defineComponent({
     props: {
@@ -13,45 +14,25 @@ export const ItemCreate = defineComponent({
     },
     setup(props, context) {
         const refKind = ref('支出');
-        const refExpensesTags = ref([
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
-            {id: 1, name: '餐费', sign: '￥', category: 'expenses'},
-            {id: 2, name: '通勤', sign: '￥', category: 'expenses'},
-            {id: 3, name: '购物', sign: '￥', category: 'expenses'},
+        onMounted(async () => {
+            const response = await http.get<{resources:Tag[]}>('/tags', {
+                kind: 'expenses',
+                _mock:'tagIndex'
+            });
+            refExpensesTags.value =  response.data.resources
+        });
+        const refExpensesTags = ref<Tag[]>([
+
         ]);
-        const refIncomeTags = ref([
-            {id: 4, name: '工资', sign: '￥', category: 'income'},
-            {id: 5, name: '股票', sign: '￥', category: 'income'},
-            {id: 6, name: '私单', sign: '￥', category: 'income'},
-            {id: 4, name: '工资', sign: '￥', category: 'income'},
-            {id: 5, name: '股票', sign: '￥', category: 'income'},
-            {id: 6, name: '私单', sign: '￥', category: 'income'},
+        onMounted(async () => {
+            const response = await http.get<{resources:Tag[]}>('/tags', {
+                kind: 'income',
+                _mock:'tagIndex'
+            });
+            refIncomeTags.value =  response.data.resources
+        });
+        const refIncomeTags = ref<Tag[]>([
+
         ]);
         return () => (
             <MainLayout class={s.layout}>{
@@ -61,43 +42,43 @@ export const ItemCreate = defineComponent({
                     default: () =>
                         <>
                             <div class={s.wrapper}>
-                            <Tabs v-model:selected={refKind.value} class={s.tabs}>
-                                <Tab name={'支出'} class={s.tags_wrapper}>
-                                    <div class={s.tag}>
-                                        <div class={s.sign}>
-                                            <Icon name="tag-add" class={s.createTag}/>
+                                <Tabs v-model:selected={refKind.value} class={s.tabs}>
+                                    <Tab name={'支出'} class={s.tags_wrapper}>
+                                        <div class={s.tag}>
+                                            <div class={s.sign}>
+                                                <Icon name="tag-add" class={s.createTag}/>
+                                            </div>
+                                            <div class={s.name}>
+                                                新增
+                                            </div>
                                         </div>
-                                        <div class={s.name}>
-                                            新增
+                                        {refExpensesTags.value.map(tag => {
+                                            return <div class={[s.tag, s.selected]}>
+                                                <div class={s.sign}>{tag.sign}</div>
+                                                <div class={s.name}>{tag.name}</div>
+                                            </div>;
+                                        })}
+                                    </Tab>
+                                    <Tab name={'收入'} class={s.tags_wrapper}>
+                                        <div class={s.tag}>
+                                            <div class={s.sign}>
+                                                <Icon name="tag-add" class={s.createTag}/>
+                                            </div>
+                                            <div class={s.name}>
+                                                新增
+                                            </div>
                                         </div>
-                                    </div>
-                                    {refExpensesTags.value.map(tag => {
-                                        return <div class={[s.tag, s.selected]}>
-                                            <div class={s.sign}>{tag.sign}</div>
-                                            <div class={s.name}>{tag.name}</div>
-                                        </div>;
-                                    })}
-                                </Tab>
-                                <Tab name={'收入'} class={s.tags_wrapper}>
-                                    <div class={s.tag}>
-                                        <div class={s.sign}>
-                                            <Icon name="tag-add" class={s.createTag}/>
-                                        </div>
-                                        <div class={s.name}>
-                                            新增
-                                        </div>
-                                    </div>
-                                    {refIncomeTags.value.map(tag => {
-                                        return <div class={[s.tag, s.selected]}>
-                                            <div class={s.sign}>{tag.sign}</div>
-                                            <div class={s.name}>{tag.name}</div>
-                                        </div>;
-                                    })}
-                                </Tab>
-                            </Tabs>
-                            <div class={s.inputPad_wrapper}>
-                                <InputPad/>
-                            </div>
+                                        {refIncomeTags.value.map(tag => {
+                                            return <div class={[s.tag, s.selected]}>
+                                                <div class={s.sign}>{tag.sign}</div>
+                                                <div class={s.name}>{tag.name}</div>
+                                            </div>;
+                                        })}
+                                    </Tab>
+                                </Tabs>
+                                <div class={s.inputPad_wrapper}>
+                                    <InputPad/>
+                                </div>
                             </div>
                         </>
                 }

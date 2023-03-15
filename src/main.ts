@@ -9,12 +9,12 @@ import {fetchMe, promiseMe} from './shared/me';
 const router = createRouter({history, routes,});
 fetchMe();
 router.beforeEach((to, from) => {
-    if (['/', '/start'].includes(to.path) || to.path.startsWith('/welcome') || to.path.startsWith('sign_in')) {
+    if (['/', '/start'].includes(to.path) || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in')) {
         return true;
     } else {
         return promiseMe!.then(
             () => true,
-            () => 'sign_in?return_to' + to.path
+            () => 'sign_in?return_to=' + to.path
         );
     }
 });
