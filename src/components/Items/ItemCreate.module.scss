@@ -17,6 +17,13 @@
   flex-wrap: wrap;
   padding-top: 16px;
 }
+.more{
+  padding: 16px;
+  text-align: center;
+  color: #999999;
+  .loadMore{}
+  .noMore{}
+}
 .createTag{
 }
 .tag{
