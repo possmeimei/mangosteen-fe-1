@@ -1,8 +1,14 @@
 export class Time {
     date: Date;
 
-    constructor(date = new Date()) {
-        this.date = date;
+    constructor(date?: string | Date) {
+        if (date === undefined) {
+            this.date = new Date();
+        } else if (typeof date === 'string') {
+            this.date = new Date(date);
+        } else {
+            this.date = date;
+        }
     }
 
     format(pattern = 'YYYY-MM-DD') {
@@ -38,9 +44,11 @@ export class Time {
     lastDayOfYear() {
         return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0,));
     }
-    getRaw(){
-        return this.date
+
+    getRaw() {
+        return this.date;
     }
+
     add(amount: number, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond') {
         const date = new Date(this.date.getTime());
         switch (unit) {
@@ -72,6 +80,6 @@ export class Time {
             default:
                 throw new Error('Time.add:unknown unit');
         }
-        return new Time(date)
+        return new Time(date);
     }
 }
