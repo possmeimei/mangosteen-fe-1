@@ -1,10 +1,10 @@
 import {defineComponent, reactive} from 'vue';
 import {Rules, validate} from '../../../shared/Validate';
 import {MainLayout} from '../../../layouts/MainLayout';
-import {Icon} from '../../../shared/Icon';
 import {TagForm} from './TagForm';
 import {Button} from '../../../shared/Button';
 import s from './Tag.module.scss';
+import {BackIcon} from '../../../shared/BackIcon';
 
 export const TagEdit = defineComponent({
     setup(props, context) {
@@ -27,8 +27,7 @@ export const TagEdit = defineComponent({
         return () => (
             <MainLayout>{{
                 title: () => '新建标签',
-                icon: () => <Icon name={'return'} onClick={() => {
-                }}/>,
+                icon: () => <BackIcon/>,
                 default: () => <>
                     <TagForm/>
                     <div class={s.actions}>

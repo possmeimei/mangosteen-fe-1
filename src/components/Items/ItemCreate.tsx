@@ -1,14 +1,14 @@
 import {defineComponent, reactive} from 'vue';
 import s from './ItemCreate.module.scss';
-import {Icon} from '../../shared/Icon';
 import {MainLayout} from '../../layouts/MainLayout';
 import {Tab, Tabs} from '../../shared/Tabs';
 import {InputPad} from './InputPad';
 import {Tags} from './Tags';
 import {http} from '../../shared/Http';
 import {useRouter} from 'vue-router';
-import { Dialog } from 'vant';
+import {Dialog} from 'vant';
 import {AxiosError} from 'axios';
+import {BackIcon} from '../../shared/BackIcon';
 
 export const ItemCreate = defineComponent({
     setup(props, context) {
@@ -18,26 +18,26 @@ export const ItemCreate = defineComponent({
             happen_at: new Date().toISOString(),
             amount: 0
         });
-        const router = useRouter()
-        const onError = (error:AxiosError<ResourceError>)=>{
-            if (error.response?.status === 422){
+        const router = useRouter();
+        const onError = (error: AxiosError<ResourceError>) => {
+            if (error.response?.status === 422) {
                 Dialog.alert({
                     title: '出错',
                     message: Object.values(error.response.data.errors).join('\n'),
-                })
+                });
             }
-            throw error
-        }
+            throw error;
+        };
         const onSubmit = async () => {
             await http.post<Resource<Item>>('/items', formData, {params: {_mock: 'itemCreate'}})
-                .catch(onError)
-            router.push('/items')
+                .catch(onError);
+            router.push('/items');
         };
         return () => (
             <MainLayout class={s.layout}>{
                 {
                     title: () => '记一笔',
-                    icon: () => <Icon name={'return'} class={s.menu}/>,
+                    icon: () => <BackIcon/>,
                     default: () =>
                         <>
                             <div class={s.wrapper}>
