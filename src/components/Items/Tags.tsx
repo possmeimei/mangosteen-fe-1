@@ -4,6 +4,7 @@ import {Icon} from '../../shared/Icon';
 import {useTags} from '../../shared/useTags';
 import {http} from '../../shared/Http';
 import {Tag} from 'vant';
+import {RouterLink} from 'vue-router';
 
 export const Tags = defineComponent({
     props: {
@@ -27,14 +28,14 @@ export const Tags = defineComponent({
         }
         return () => <>
             <div class={s.tags_wrapper}>
-                <div class={s.tag}>
+                <RouterLink to={`/tags/create?.kind=${props.kind}`} class={s.tag}>
                     <div class={s.sign}>
                         <Icon name="tag-add" class={s.createTag}/>
                     </div>
                     <div class={s.name}>
                         新增
                     </div>
-                </div>
+                </RouterLink>
                 {tags.value.map(tag => {
                     return <div class={[s.tag, props.selected === tag.id ? s.selected : '']}
                     onClick={()=>onSelect(tag)}>
