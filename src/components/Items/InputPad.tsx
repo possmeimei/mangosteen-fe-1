@@ -7,7 +7,10 @@ import {DatetimePicker, Popup} from 'vant';
 export const InputPad = defineComponent({
     props: {
         happenAt: String,
-        amount: Number
+        amount: Number,
+        onSubmit: {
+            type: Function as PropType<() => void>
+        }
     },
     setup(props, context) {
         const appendText = (n: number | string) => {
@@ -96,7 +99,10 @@ export const InputPad = defineComponent({
                 }
             },
             {
-                text: 'OK', onClick: () => context.emit('update:amount', parseFloat(refAmount.value) * 100)
+                text: 'OK', onClick: () => {
+                    context.emit('update:amount', parseFloat(refAmount.value) * 100)
+                    props.onSubmit?.()
+                }
             },
         ];
         const refDatePickerVisible = ref(false);
