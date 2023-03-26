@@ -1,4 +1,4 @@
-import {defineComponent, reactive, toRaw} from 'vue';
+import {defineComponent, onMounted, PropType, reactive, toRaw} from 'vue';
 import s from './Tag.module.scss';
 import {Button} from '../../../shared/Button';
 import {hasError, Rules, validate} from '../../../shared/Validate';
@@ -8,10 +8,16 @@ import {http} from '../../../shared/Http';
 import {onFormError} from '../../../shared/OnFormError';
 
 export const TagForm = defineComponent({
+    props: {
+        id: {
+            type: Number
+        }
+    },
     setup(props, context) {
         const route = useRoute();
         const router = useRouter();
-        const formData = reactive({
+        const formData = reactive<Partial<Tag>>({
+            id: undefined,
             name: '',
             sign: '',
             kind: route.query.kind!.toString(),
@@ -28,14 +34,24 @@ export const TagForm = defineComponent({
             });
             Object.assign(errors, validate(formData, rules));
             if (!hasError(errors)) {
-                const response = await http.post('/tags', toRaw(formData), {
+                const promise = await formData.id ? http.patch(`/tags/${formData.id}`, toRaw(formData), {
+                    params: {_mock: 'tagEdit'}
+                }) : http.post('/tags', toRaw(formData), {
                     params: {_mock: 'tagCreate'}
-                }).catch((error) =>
+                });
+                await promise.catch((error) =>
                     onFormError(error, (data) => Object.assign(errors, data.errors))
                 );
                 router.back();
             }
         };
+        onMounted(async () => {
+            if (!props.id) {
+                return;
+            }
+            const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {_mock: 'tagShow'});
+            Object.assign(formData, response.data.resource);
+        });
         return () => (
             <Form onSubmit={onSubmit}>
                 <FormItem label="标签名（4个字以内）" type="text" v-model={formData.name}
