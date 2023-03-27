@@ -17,7 +17,6 @@ import {TagPage} from '../views/TagPage';
 import {SignInPage} from '../views/SignInPage';
 import {StatisticsPage} from '../views/StatisticsPage';
 import {RouteRecordRaw} from 'vue-router';
-import {http} from '../shared/Http';
 
 export const routes: RouteRecordRaw[] = [
     {path: '/', redirect: '/welcome'},
