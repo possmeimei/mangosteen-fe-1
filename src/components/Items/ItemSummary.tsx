@@ -5,7 +5,6 @@ import {Button} from 'vant';
 import {http} from '../../shared/Http';
 import {Money} from '../../shared/Money';
 import {DateTime} from '../../shared/DateTime';
-import {$computed} from 'vue/macros';
 
 export const ItemSummary = defineComponent({
     props: {
