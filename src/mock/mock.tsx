@@ -20,9 +20,9 @@ export const mockTagEdit: Mock = config => {
 
 export const mockItemIndexBalance: Mock = config => {
     return [200, {
-        income: 9900,
-        expenses: 9900,
-        balance: 0,
+        income: 8300,
+        expenses: 5600,
+        balance: 2700,
     }];
 };
 export const mockItemIndex: Mock = (config) => {
@@ -56,9 +56,9 @@ export const mockItemIndex: Mock = (config) => {
         resources: createItem(n),
         pager: createPager(page),
         summary: {
-            income: 9900,
-            expenses: 9900,
-            balance: 0,
+            income: 8300,
+            expenses: 5600,
+            balance: 2700,
         }
     });
     if (!page || page === 1) {
