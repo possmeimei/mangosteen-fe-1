@@ -79,5 +79,5 @@ export const ItemSummary = defineComponent({
                 <FloatButton iconName="add"/>
             </div>
         );
-    },
+    }
 });
