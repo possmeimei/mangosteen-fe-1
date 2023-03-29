@@ -1,7 +1,9 @@
-import {defineComponent, PropType, ref} from 'vue';
+import {defineComponent, onMounted, PropType, ref} from 'vue';
 import {Icon} from './Icon';
 import s from './Overlay.module.scss';
-import {RouterLink} from 'vue-router';
+import {RouterLink, useRoute} from 'vue-router';
+import {promiseMe} from './me';
+import {Dialog} from 'vant';
 
 export const Overlay = defineComponent({
     props: {
@@ -13,14 +15,34 @@ export const Overlay = defineComponent({
         const close = () => {
             props.onClose?.();
         };
-        const onClickSignIn = () => {
+        const route = useRoute();
+        const me = ref<User>();
+        const onSignOut = async () => {
+            await Dialog.confirm({
+                title: '确认',
+                message: '你确定要取消登录吗？'
+            });
+            localStorage.removeItem('jwt');
         };
+        onMounted(async () => {
+            const response = await promiseMe;
+            me.value = response?.data.resource;
+        });
         return () => <>
             <div class={s.mask} onClick={close}></div>
             <div class={s.overlay}>
-                <section class={s.currentUser} onClick={onClickSignIn}>
-                    <h2>未登录用户</h2>
-                    <p>点击登录</p>
+                <section class={s.currentUser}>
+                    {me.value ? (
+                        <div>
+                            <h2 class={s.email}>{me.value.email}</h2>
+                            <p onClick={onSignOut}>点击退出登录</p>
+                        </div>
+                    ) : (
+                        <RouterLink to={`/sign_in?return_to=${route.fullPath}`}>
+                            <h2>未登录用户</h2>
+                            <p>点击登录</p>
+                        </RouterLink>
+                    )}
                 </section>
                 <nav>
                     <ul>
@@ -50,14 +72,14 @@ export const Overlay = defineComponent({
 });
 
 export const OverlayIcon = defineComponent({
-    setup(props, context){
+    setup(props, context) {
         const overlayVisible = ref(false);
         const onClickMenu = () => {
             overlayVisible.value = !overlayVisible.value;
         };
-        return ()=><>
+        return () => <>
             <Icon name={'menu'} class={s.menu} onClick={onClickMenu}/>
             {overlayVisible.value && <Overlay onClose={() => overlayVisible.value = false}/>}
-        </>
+        </>;
     }
-})
+});
