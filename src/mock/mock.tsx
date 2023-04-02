@@ -19,15 +19,27 @@ export const mockTagEdit: Mock = config => {
 };
 
 export const mockItemSummary: Mock = config => {
-    return [200, {
-        "groups": [
-            { "happen_at": "2023-04-21T00:00:00.000+0800", "amount": 100 },
-            { "happen_at": "2023-04-25T00:00:00.000+0800", "amount": 300 },
-            { "happen_at": "2023-04-29T00:00:00.000+0800", "amount": 200 }
-        ],
-        "summary": 600
-    }]
-}
+    if (config.params.group_by === 'happen_at') {
+        return [200, {
+            groups: [
+                {happen_at: '2023-04-21T00:00:00.000+0800', amount: 100},
+                {happen_at: '2023-04-25T00:00:00.000+0800', amount: 300},
+                {happen_at: '2023-04-29T00:00:00.000+0800', amount: 200}
+            ],
+            summary: 600
+        }];
+    } else {
+        return [200, {
+            groups: [
+                {tag_id: 1, tag: {id: 1, name: '交通'}, amount: 100},
+                {tag_id: 2, tag: {id: 1, name: '吃饭'}, amount: 300},
+                {tag_id: 3, tag: {id: 1, name: '购物'}, amount: 200}
+            ],
+            summary: 600
+        }];
+    }
+
+};
 export const mockItemIndexBalance: Mock = config => {
     return [200, {
         income: 8300,
@@ -58,7 +70,7 @@ export const mockItemIndex: Mock = (config) => {
             user_id: createId(),
             amount: Math.floor(Math.random() * 10000),
             tags_id: [createId()],
-            tags:[createTag()],
+            tags: [createTag()],
             happen_at: faker.date.past().toISOString(),
             kind: config.params.kind
         }));
