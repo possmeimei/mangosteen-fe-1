@@ -19,7 +19,8 @@ export const mockTagEdit: Mock = config => {
 };
 
 export const mockItemSummary: Mock = config => {
-    if (config.params.group_by === 'happen_at') {
+    const {group_by,kind} = config.params
+    if (config.params.group_by === 'happen_at' && kind === 'expenses') {
         return [200, {
             groups: [
                 {happen_at: '2023-04-21T00:00:00.000+0800', amount: 100},
@@ -28,17 +29,34 @@ export const mockItemSummary: Mock = config => {
             ],
             summary: 600
         }];
-    } else {
+    } else if (config.params.group_by === 'happen_at' && kind === 'income') {
+        return [200, {
+            groups: [
+                {happen_at: '2023-04-18T00:00:00.000+0800', amount: 300},
+                {happen_at: '2023-04-20T00:00:00.000+0800', amount: 500},
+                {happen_at: '2023-04-24T00:00:00.000+0800', amount: 100}
+            ],
+            summary: 900
+        }];
+    }else if (config.params.group_by === 'tag_id' && kind === 'expenses') {
         return [200, {
             groups: [
                 {tag_id: 1, tag: {id: 1, name: '交通', sign: faker.internet.emoji()}, amount: 100},
-                {tag_id: 2, tag: {id: 1, name: '吃饭', sign: faker.internet.emoji()}, amount: 300},
-                {tag_id: 3, tag: {id: 1, name: '购物', sign: faker.internet.emoji()}, amount: 200}
+                {tag_id: 2, tag: {id: 2, name: '吃饭', sign: faker.internet.emoji()}, amount: 300},
+                {tag_id: 3, tag: {id: 3, name: '购物', sign: faker.internet.emoji()}, amount: 200}
             ],
             summary: 600
         }];
+    }else {
+        return [200, {
+            groups: [
+                {tag_id: 4, tag: {id: 4, name: '交通', sign: faker.internet.emoji()}, amount: 600},
+                {tag_id: 5, tag: {id: 5, name: '吃饭', sign: faker.internet.emoji()}, amount: 400},
+                {tag_id: 6, tag: {id: 6, name: '购物', sign: faker.internet.emoji()}, amount: 300}
+            ],
+            summary: 1300
+        }];
     }
-
 };
 export const mockItemIndexBalance: Mock = config => {
     return [200, {
